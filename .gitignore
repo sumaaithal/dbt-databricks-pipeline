@@ -11,3 +11,4 @@ wheels/
 
 # vscode extensions
 .vscode/
+dev.session.sql
