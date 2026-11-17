@@ -16,6 +16,16 @@ models:
         description: "Timestamp indicating when the job was originally posted."
       - name: job_salary
         description: "Salary information reported for the job."
+      - salary_min:
+        description: "Parsed minimum salary value from the job_salary field."
+      - salary_max:
+        description: "Parsed maximum salary value from the job_salary field."
+      - salary_period:
+        description: "Parsed pay period (e.g., year, hour) from the job_salary field."
+      - salary_currency:
+        description: "Parsed currency from the job_salary field."
+      - salary_avg:
+        description: "Average of the parsed minimum and maximum salary values."
       - name: job_schedule_type
         description: "Work schedule type, such as full-time or part-time."
       - name: job_work_from_home
