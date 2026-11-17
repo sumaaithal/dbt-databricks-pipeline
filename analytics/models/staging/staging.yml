@@ -20,6 +20,14 @@ models:
         description: "Work schedule type, such as full-time or part-time."
       - name: job_work_from_home
         description: "Boolean flag indicating whether the job is remote or work-from-home."
+      - name: has_no_degree_mentioned
+        description: "Boolean flag indicating whether the job posting mentions that no degree is required."
+      - name: has_paid_time_off
+        description: "Boolean flag indicating whether the job posting mentions paid time off."
+      - name: has_dental_insurance
+        description: "Boolean flag indicating whether the job posting mentions dental insurance."
+      - name: has_health_insurance
+        description: "Boolean flag indicating whether the job posting mentions health insurance."
       - name: job_extensions_raw
         description: "Raw job extension data extracted from the source."
       - name: search_time
