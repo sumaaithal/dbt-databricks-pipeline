@@ -1,0 +1,8 @@
+models:
+  - name: int_skill_observations
+    description: "One row per (job, skill) pair extracted from the raw job postings data."
+    columns:
+      - name: skill_id
+        description: "Identifier for the extracted skill."
+      - name: postings_with_skill
+        description: "Count of job postings that require the skill."

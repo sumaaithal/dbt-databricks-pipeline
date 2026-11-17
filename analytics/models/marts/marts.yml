@@ -1,0 +1,40 @@
+models:
+  - name: fct_job_postings
+    description: "Fact table for job postings with one row per job posting."
+    columns:
+      - name: job_id
+        description: "Unique identifier for the job posting."
+      - name: job_title
+        description: "Title of the job posting."
+      - name: search_term
+        description: "Search term used to find the job posting."
+      - name: company_name
+        description: "Name of the employer."
+      - name: job_location
+        description: "Location of the job."
+      - name: source_platform
+        description: "Platform where the job posting was found."
+      - name: job_schedule_type
+        description: "Work schedule type, such as full-time or part-time."
+      - name: job_work_from_home
+        description: "Whether the role is remote or work-from-home eligible."
+      - name: search_date
+        description: "Date the job was searched."
+      - name: salary_min
+        description: "Minimum salary for the role."
+      - name: salary_max
+        description: "Maximum salary for the role."
+      - name: job_salary_avg
+        description: "Average salary estimate for the role."
+      - name: salary_period
+        description: "Salary payment period, such as year or hour."
+      - name: salary_currency
+        description: "Currency used for the salary."
+      - name: has_health_insurance
+        description: "Whether the job includes health insurance."
+      - name: has_dental_insurance
+        description: "Whether the job includes dental insurance."
+      - name: has_paid_time_off
+        description: "Whether the job includes paid time off."
+      - name: has_no_degree_mentioned
+        description: "Whether no degree requirement is mentioned in the posting."

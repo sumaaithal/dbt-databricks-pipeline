@@ -32,7 +32,7 @@ cleaned AS (
         job_title,
         TRIM(company_name) as company_name,
         job_location,
-        REGEXP_REPLACE(job_via, '^via ', '') as job_via,
+        REGEXP_REPLACE(job_via, '^via ', '') as source_platform,
         job_posted_at,
         job_schedule_type,
         job_work_from_home,
