@@ -1,0 +1,2 @@
+--SELECT count(*) from dev.default_staging.stg_job_postings;
+--SELECT count(*) from dev.default_staging.stg_job_skills;
