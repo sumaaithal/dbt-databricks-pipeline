@@ -6,6 +6,8 @@
         "Health insurance"] 
 %}
 
+
+
 --select only the rows where the error is not true
 WITH source AS (
     SELECT * 
@@ -24,7 +26,7 @@ parsed AS (
 --clean the data by removing any leading or trailing whitespace from the company name and 
 --removing the "via" prefix from the job_via column.
 
-cleaned (
+cleaned AS (
     SELECT 
         job_id,
         job_title,
@@ -44,7 +46,9 @@ cleaned (
         ARRAY_CONTAINS(
             --FROM_JSON(job_extensions_raw, 'ARRAY<STRING>'),'{{ keyword }}'
             job_extensions,'{{ keyword }}'
-            ) AS has_{{ keyword | lower | replace(' ', '_') }}
+            ) 
+        --AS has_{{ keyword | lower | replace(' ', '_') }}
+        AS has_{{ slugify(keyword) }}
             {{- ","  if not loop.last }}
         {% endfor -%}
     FROM parsed
