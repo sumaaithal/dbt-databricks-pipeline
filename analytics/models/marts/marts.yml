@@ -10,9 +10,13 @@ models:
     columns:
       - name: job_id
         description: Posting id from the scraper; the grain and the merge key.
-        #data_tests:
-        #  - not_null
-        #  - unique
+
+      #Primary key is not unique, hence it would require cleaning based on test results
+      #(63207 failed row(s)): unique_fct_job_postings_job_id -> it is handled in mart layer (fct_job_postings)
+      #(6255 failed row(s)): not_null_fct_job_postings_job_id -> it is handled in staging layer (stg_job_postings)
+        data_tests:
+          - not_null
+          - unique
       - name: job_title
         description: Title as posted.
       - name: search_term
@@ -21,7 +25,11 @@ models:
           under a different search carries its most recent term.
       - name: company_name
         description: Employer, trimmed upstream; natural key into dim_company.
+        #fct_job_postings is a child, which references parent table dim_company via company_name
+
+        #if we do the other way around, the result is 0 and there would not be any error cause dim_company is derived from fct_job_postings
         data_tests:
+          - not_null
           - relationships:
               arguments:
                 to: ref('dim_company')
@@ -84,6 +92,11 @@ models:
         data_tests:
           - not_null
           - unique
+          #incorrect way to test the relationship intergrity. It should be from child to parent; Direction matters
+          # - relationships:
+          #     arguments:
+          #       to: ref('bridge_job_skills')
+          #       field: skill_id
       - name: display_name
         description: Human-readable skill name.
       - name: category
@@ -105,6 +118,7 @@ models:
         description: Job carrying the skill; every value exists in fct_job_postings.
         data_tests:
          - not_null
+         #bridge_job_skills is a child table referencing parent fct_job_postings via job_id
          - relationships:
             arguments:
               to: ref('fct_job_postings')
@@ -113,6 +127,7 @@ models:
         description: Skill observed on the job; every value exists in dim_skill.
         data_tests:
           - not_null
+          # This test ensures that every skill_id in bridge_job_skills exists in dim_skill, maintaining referential integrity. 
           - relationships:
               arguments:
                 to: ref('dim_skill')

@@ -4,6 +4,8 @@ models:
     columns:
       - name: job_id
         description: "Unique identifier for the job posting."
+        data_tests:
+          - not_null
       - name: job_title
         description: "Title of the job posting."
       - name: company_name
@@ -18,8 +20,21 @@ models:
         description: "Salary information reported for the job."
       - name: salary_min
         description: "Parsed minimum salary value from the job_salary field."
+
+        #---custom generic tests begin---#
+        #tests if there any negative values in the salary_min column
+        #uses the custom not_negative test defined in analytics/tests/generic/not_negative.sql
+        data_tests:
+          - not_negative
+
+        #tests if there any negative values in the salary_max column
+        #uses the custom not_negative test defined in analytics/tests/generic/not_negative.sql
       - name: salary_max
         description: "Parsed maximum salary value from the job_salary field."
+        data_tests:
+          - not_negative
+        #---custom generic tests end---#
+
       - name: salary_period  
         description: "Parsed pay period (e.g., year, hour) from the job_salary field."
       - name: salary_currency
@@ -28,6 +43,13 @@ models:
         description: "Average of the parsed minimum and maximum salary values."
       - name: job_schedule_type
         description: "Work schedule type, such as full-time or part-time."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Part-time", "Full-time", "Contractor",'Internship'] 
+              # Set the severity to warn instead of failing the test
+              config:
+                severity: warn
       - name: job_work_from_home
         description: "Boolean flag indicating whether the job is remote or work-from-home."
       - name: has_no_degree_mentioned
@@ -46,6 +68,14 @@ models:
         description: "Date when the job search was executed."
       - name: search_term
         description: "Search term used to retrieve the job results."
+
+        # check if only 3 accepted values are used for search_term
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Data Engineer", "Data Analyst", "Data Scientist"] 
+              config:
+                severity: error
       - name: search_location
         description: "Search location used for the job query."
 

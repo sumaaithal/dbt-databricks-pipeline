@@ -12,7 +12,9 @@
 WITH source AS (
     SELECT * 
     FROM {{ source('jobs', 'raw_job_postings') }}
-    WHERE error IS NOT TRUE
+    WHERE error IS NOT TRUE 
+        --remove the rows with null job_id because they are failing in marts.yml primary key test (null and unique)
+        AND job_id IS NOT NULL
 
 ),
 
