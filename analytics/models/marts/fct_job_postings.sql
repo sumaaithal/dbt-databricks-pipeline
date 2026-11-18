@@ -26,5 +26,5 @@ SELECT
     has_paid_time_off,
     has_no_degree_mentioned
 FROM job_postings
---handling the duplicates values
+--handling the duplicates values for the errors thrown in the tests
 QUALIFY ROW_NUMBER() OVER (PARTITION BY job_id ORDER BY search_date DESC) = 1
