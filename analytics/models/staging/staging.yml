@@ -88,3 +88,21 @@ models:
         description: "Identifier for the extracted skill."
       - name: skill_keyword
         description: "Skill keyword extracted from the job posting."
+
+# perform unit test for parsing salary values
+unit_tests:
+  - name: test_parse_salary_shape
+    description: This handles a range, a single value, and no salary at all
+    model: stg_job_postings
+    given: 
+      - input: source('jobs', 'raw_job_postings')
+        rows: 
+          #43.75–73.75 an hour , its a different - not hypen (taken from staging table tool)
+          - {'job_id': 1, 'job_salary': '100K–186K a year'}
+          - {'job_id': 2, 'job_salary': '32.50 an hour'}
+          - {'job_id': 3, 'job_salary': null}
+    expect: 
+      rows: 
+        - {'job_id': 1, 'salary_min': 100000, 'salary_max': 186000} 
+        - {'job_id': 2, 'salary_min': 32.50, 'salary_max': 32.50}
+        - {'job_id': 3, 'salary_min': null, 'salary_max': null}
