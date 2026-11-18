@@ -1,3 +1,11 @@
+{{
+    config(
+        materialized='incremental',
+        incremental_strategy='merge',
+        unique_key='job_id'
+    )
+}}
+
 --dim_company -> one to many  -> fact_job_postings -> one to many -> bridge job skills (job can have many skills )-> many to one -> dim skill
 
 -- fetch the data from stg_job_postings view
@@ -26,5 +34,12 @@ SELECT
     has_paid_time_off,
     has_no_degree_mentioned
 FROM job_postings
+
+--incremental loading 
+-- It ensures that only new records with a search_date > the maximum search_date in the existing table are loaded incrementally. 
+{% if is_incremental() %}
+    WHERE search_date > (SELECT MAX(search_date) FROM {{ this }})
+{% endif %}
+
 --handling the duplicates values for the errors thrown in the tests
 QUALIFY ROW_NUMBER() OVER (PARTITION BY job_id ORDER BY search_date DESC) = 1
