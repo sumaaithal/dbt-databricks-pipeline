@@ -1,0 +1,30 @@
+SELECT 
+     job_id,
+     job_title,
+     company_name,
+     salary_min,
+     salary_max,
+     searched_at
+ FROM {{ ref('stg_job_postings') }}
+ WHERE job_title = 'Senior Data Engineer'
+     AND company_name = 'Fraser Health'
+     -- run_started at is a default value for the 'as_of' variable if not provided
+     AND search_date <= CAST('{{ var('as_of', run_started_at)}}' AS DATE)
+ QUALIFY ROW_NUMBER() OVER (PARTITION BY job_id ORDER BY searched_at DESC) = 1
+
+SELECT
+  version,
+  operation,
+  CAST(operationMetrics['numTargetRowsUpdated'] AS BIGINT)  AS updated_rows,
+  CAST(operationMetrics['numTargetRowsInserted'] AS BIGINT) AS inserted_rows,
+  CAST(operationMetrics['numTargetRowsDeleted'] AS BIGINT)  AS deleted_rows,
+  CAST(operationMetrics['numSourceRows'] AS BIGINT)         AS source_rows,
+  map_keys(operationMetrics)                                AS metric_keys
+FROM (DESCRIBE HISTORY dev.marts.fct_job_postings)
+WHERE operation in ('MERGE', 'CREATE OR REPLACE TABLE AS SELECT')
+ORDER BY version DESC;
+
+SELECT MAX(search_date) FROM dev.marts.fct_job_postings;
+
+DELETE FROM dev.marts.fct_job_postings
+WHERE search_date = (SELECT MAX(search_date) FROM dev.marts.fct_job_postings);

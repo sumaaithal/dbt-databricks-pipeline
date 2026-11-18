@@ -1,0 +1,12 @@
+-- EDA
+select search_term,
+count(*) as postings
+from raw.jobs.raw_job_postings
+group by search_term
+order by postings desc;
+
+-- catalog creation
+CREATE CATALOG IF NOT EXISTS dev;
+CREATE CATALOG IF NOT EXISTS prod;
+
+DROP SCHEMA IF EXISTS dev.DEFAULT_STAGING CASCADE;
