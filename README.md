@@ -289,6 +289,25 @@ dbt snapshot
 
 ---
 
+## 📦 Data & Testing
+
+**Source data**
+- 11 Parquet files covering Jun 2025 – Jul 2026
+- `stg_job_postings`: ~686K rows
+- `stg_job_skills`: ~3.3M rows (one row per job–skill pair)
+
+**Data quality tests**
+- Generic dbt tests (not-null, unique, relationships) on keys
+- Custom generic test `not_negative` for salary fields
+- Singular test (severity: `warn`) flagging implausible salary outliers (yearly USD ≥ 1M)
+- dbt unit tests: `dbt test --select "test_type:unit"`
+
+**Point-in-time querying**
+- `stg_job_postings_current` accepts an `as_of` variable:
+  `dbt show --select stg_job_postings_current --vars '{as_of: 2025-09-11}'`
+
+---
+
 ## 🛠️ Troubleshooting
 
 - **`zsh: command not found: dot`**
