@@ -295,6 +295,7 @@ dbt snapshot
 - 11 Parquet files covering Jun 2025 – Jul 2026
 - `stg_job_postings`: ~686K rows
 - `stg_job_skills`: ~3.3M rows (one row per job–skill pair)
+- `skill_categories` (seed): 1,422 rows mapping skills to categories
 
 **Data quality tests**
 - Generic dbt tests (not-null, unique, relationships) on keys
