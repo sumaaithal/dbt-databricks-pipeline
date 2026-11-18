@@ -9,6 +9,8 @@ End-to-end ELT pipeline on **Databricks + dbt** for ingesting job posting data, 
 
 ![Databricks Jobs](analytics/images/end-to-end-workflow.png)
 
+🔗 **Live dbt Docs**: https://sumaaithal.github.io/dbt-databricks-pipeline/#/resource/model/?modeling_layer=Staging
+
 ---
 
 ## 📚 Table of Contents
@@ -224,6 +226,9 @@ Two production jobs were created:
 ## 📊 Lineage
 
 You can generate full lineage from dbt artifacts and export to PNG.
+
+### 🌐 Hosted dbt Docs (GitHub Pages)
+- Live docs: https://sumaaithal.github.io/dbt-databricks-pipeline/#/resource/model/?modeling_layer=Staging
 
 ### Generate lineage artifact
 ```bash
