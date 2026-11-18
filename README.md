@@ -73,6 +73,13 @@ brew install graphviz
 Raw Source → Databricks raw catalog → dbt staging → dbt intermediate → dbt marts → BI/Consumption
 ```
 
+### Medallion mapping
+| Layer | dbt models | Purpose |
+|---|---|---|
+| Bronze | `staging` (`stg_*`) | Cleaned, standardised raw data |
+| Silver | `intermediate` (`int_*`) | Deduplicated, normalised entities |
+| Gold | `marts` (`fct_*`, `dim_*`, `bridge_*`) | Analytics-ready facts and dimensions |
+
 ### Environment/Catalog Strategy
 - `raw`: source-aligned landing zone
 - `dev`: iterative model development and testing
@@ -302,5 +309,4 @@ dbt snapshot
 ---
 
 ## 👤 Author
-
-Built as a production-style dbt + Databricks analytics pipeline with environment isolation, orchestration, and lineage visibility.
+Suma Aithal, Data Engineer. Personal project built to practise dbt and Databricks. [LinkedIn](https://www.linkedin.com/in/sumaaithal)
